@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'colors.dart';
-
 Widget normalText(
   String? text,
   Color? color,
