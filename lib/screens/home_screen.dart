@@ -52,12 +52,17 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(
                 height: 25,
               ),
-              normalText(
-                "Welcome to our",
-                lightGrey,
-                18,
+              Row(
+                children: [
+                  normalText(
+                    "Welcome to ",
+                    lightGrey,
+                    28,
+                  ),
+                  // const SizedBox(width: 5,),
+                  headingText("Quizzer", Colors.white, 32),
+                ],
               ),
-              headingText("Quiz App", Colors.white, 32),
               const SizedBox(
                 height: 20,
               ),
@@ -78,7 +83,7 @@ class HomeScreen extends StatelessWidget {
                     );
                   },
                   child: Container(
-                    margin: const EdgeInsets.only(bottom: 20),
+                    margin: const EdgeInsets.only(bottom: 30),
                     alignment: Alignment.center,
                     width: size.width - 100,
                     padding: const EdgeInsets.all(14),
