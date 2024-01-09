@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app3/constants/colors.dart';
 import 'package:quiz_app3/constants/images.dart';
 import 'package:quiz_app3/constants/text_style.dart';
+import 'package:quiz_app3/screens/quiz_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -68,19 +68,29 @@ class HomeScreen extends StatelessWidget {
               const Spacer(),
               Align(
                 alignment: Alignment.center,
-                child: Container(
-                  margin: EdgeInsets.only(bottom: 20),
-                  alignment: Alignment.center,
-                  width: size.width - 100,
-                  padding: EdgeInsets.all(14),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: headingText(
-                    "Continue",
-                    blue,
-                    18,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const QuizScreen(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 20),
+                    alignment: Alignment.center,
+                    width: size.width - 100,
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: headingText(
+                      "Continue",
+                      blue,
+                      18,
+                    ),
                   ),
                 ),
               )
