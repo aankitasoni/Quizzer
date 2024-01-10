@@ -101,7 +101,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   }
                   return SingleChildScrollView(
                     child: Column(
-                      children: [
+                      children: <Widget>[
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -209,7 +209,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                   if (answer == optionsList[index].toString()) {
                                     optionsColor[index] = Colors.green;
 
-                                    points = points +10;
+                                    points = points + 10;
+                                    print(points);
+
                                   } else {
                                     optionsColor[index] = Colors.red;
                                   }
@@ -248,6 +250,9 @@ class _QuizScreenState extends State<QuizScreen> {
                             );
                           },
                         ),
+                        // if (currentQuestionIndex+1 == data.length){
+                        //    Text('Submit'),
+                        // },
                       ],
                     ),
                   );
