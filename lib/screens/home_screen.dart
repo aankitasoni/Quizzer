@@ -18,13 +18,6 @@ class HomeScreen extends StatelessWidget {
           width: double.infinity,
           height: double.infinity,
           padding: const EdgeInsets.all(12),
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [blue, darkBlue],
-            ),
-          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
