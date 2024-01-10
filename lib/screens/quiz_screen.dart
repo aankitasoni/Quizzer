@@ -147,7 +147,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                   child: CircularProgressIndicator(
                                     value: seconds / 60,
                                     valueColor: const AlwaysStoppedAnimation(
-                                        Colors.white),
+                                      Colors.white,
+                                    ),
                                   ),
                                 ),
                               ),

@@ -27,21 +27,13 @@ class _ResultScreenState extends State<ResultScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Results"),
-          centerTitle: true,
-          leading: InkWell(
-            child: const Icon(
-              CupertinoIcons.xmark,
-            ),
-            onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const HomeScreen(),
-                ),
-              );
-            },
-          ),
+
+          // title: const Text("Results"),
+          // centerTitle: true,
+          // leading: const Icon(
+          //   CupertinoIcons.xmark,
+          // ),
+          leading: BackButton(),
         ),
         body: Container(
           width: double.infinity,
