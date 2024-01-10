@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:quiz_app3/constants/text_style.dart';
@@ -32,7 +31,10 @@ class _ResultScreenState extends State<ResultScreen> {
         appBar: AppBar(
           backgroundColor: backgroundColor,
           leading: Padding(
-            padding: const EdgeInsets.all(2.0),
+            padding: const EdgeInsets.only(
+              left: 8.0,
+              top: 8,
+            ),
             child: backButton(
               onPressed: () {
                 Navigator.pushReplacement(
