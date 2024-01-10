@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app3/constants/colors.dart';
 import 'package:quiz_app3/constants/images.dart';
 import 'package:quiz_app3/constants/text_style.dart';
+import 'package:quiz_app3/screens/result_screen.dart';
 import 'package:quiz_app3/services/api_services.dart';
 
 class QuizScreen extends StatefulWidget {
@@ -100,16 +101,14 @@ class _QuizScreenState extends State<QuizScreen> {
                 data = snapshot.data["results"]; // Assign data variable
 
                 if (isLoaded == false) {
-                  optionsList =
-                  data[currentQuestionIndex]["incorrect_answers"];
-                  optionsList
-                      .add(data[currentQuestionIndex]["correct_answer"]);
+                  optionsList = data[currentQuestionIndex]["incorrect_answers"];
+                  optionsList.add(data[currentQuestionIndex]["correct_answer"]);
                   optionsList.shuffle();
                   isLoaded = true;
                 }
                 return SingleChildScrollView(
                   child: Column(
-                    children: <Widget>[
+                    children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -147,8 +146,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                   height: 70,
                                   child: CircularProgressIndicator(
                                     value: seconds / 60,
-                                    valueColor:
-                                    const AlwaysStoppedAnimation(Colors.white),
+                                    valueColor: const AlwaysStoppedAnimation(
+                                        Colors.white),
                                   ),
                                 ),
                               ),
@@ -190,14 +189,14 @@ class _QuizScreenState extends State<QuizScreen> {
                         itemCount: optionsList.length,
                         itemBuilder: (BuildContext context, int index) {
                           var answer =
-                          data[currentQuestionIndex]["correct_answer"];
+                              data[currentQuestionIndex]["correct_answer"];
 
                           return GestureDetector(
                             onTap: () {
                               setState(() {
                                 if (answer == optionsList[index].toString()) {
                                   optionsColor[index] = Colors.green;
-                                  points = points + 10;
+                                  points = points + 1;
                                   print(points);
                                 } else {
                                   optionsColor[index] = Colors.red;
@@ -206,7 +205,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                 // Move to the next question after a delay
                                 Future.delayed(
                                   const Duration(seconds: 1),
-                                      () {
+                                  () {
                                     moveToNextQuestion();
                                   },
                                 );
@@ -236,8 +235,13 @@ class _QuizScreenState extends State<QuizScreen> {
                       if (currentQuestionIndex + 1 == data.length)
                         ElevatedButton(
                           onPressed: () {
-                            // Handle the submit button click
-                            // You can add your logic to submit the quiz or navigate to the result screen.
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ResultScreen(points: points),
+                              ),
+                            );
                           },
                           child: const Text('Submit'),
                         ),

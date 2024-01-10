@@ -53,7 +53,7 @@ class _ResultScreenState extends State<ResultScreen> {
             children: [
               Column(
                 children: [
-                  headingText("Your Final Score", Colors.black, 28),
+                  headingText("Your Final Score", Colors.white, 28),
                   const SizedBox(
                     height: 50,
                   ),
@@ -64,13 +64,13 @@ class _ResultScreenState extends State<ResultScreen> {
                     center: Text(
                       "${widget.points}/20",
                       style: const TextStyle(
-                        color: Colors.black,
+                        color: Colors.white,
                         fontSize: 40,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     backgroundColor: lightGrey,
-                    progressColor: Colors.red,
+                    progressColor: Colors.green,
                   ),
                   const SizedBox(
                     height: 80,
