@@ -7,9 +7,10 @@ import 'package:quiz_app3/constants/images.dart';
 import 'package:quiz_app3/constants/text_style.dart';
 import 'package:quiz_app3/screens/result_screen.dart';
 import 'package:quiz_app3/services/api_services.dart';
+import 'package:quiz_app3/widgets/back_button.dart';
 
 class QuizScreen extends StatefulWidget {
-  const QuizScreen({super.key});
+  const QuizScreen({Key? key}) : super(key: key);
 
   @override
   State<QuizScreen> createState() => _QuizScreenState();
@@ -22,6 +23,7 @@ class _QuizScreenState extends State<QuizScreen> {
   late Future quiz;
 
   int points = 0;
+  int inpoints = 0;
 
   var isLoaded = false;
   var optionsList = [];
@@ -34,7 +36,7 @@ class _QuizScreenState extends State<QuizScreen> {
     Colors.white,
   ];
 
-  var data; // Declare data variable
+  var data;
 
   @override
   void initState() {
@@ -45,21 +47,24 @@ class _QuizScreenState extends State<QuizScreen> {
 
   @override
   void dispose() {
-    timer!.cancel();
+    timer?.cancel();
     super.dispose();
   }
 
   startTimer() {
-    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        if (seconds > 0) {
-          seconds--;
-        } else {
-          timer.cancel();
-          moveToNextQuestion();
-        }
-      });
-    });
+    timer = Timer.periodic(
+      const Duration(seconds: 1),
+      (timer) {
+        setState(() {
+          if (seconds > 0) {
+            seconds--;
+          } else {
+            timer.cancel();
+            moveToNextQuestion();
+          }
+        });
+      },
+    );
   }
 
   resetColor() {
@@ -78,10 +83,10 @@ class _QuizScreenState extends State<QuizScreen> {
       currentQuestionIndex++;
       resetColor();
       seconds = 60;
+      timer?.cancel(); // Cancel the existing timer
       startTimer();
     } else {
-      // Handle quiz completion, e.g., show result or submit quiz
-      timer!.cancel();
+      timer?.cancel();
     }
   }
 
@@ -98,7 +103,7 @@ class _QuizScreenState extends State<QuizScreen> {
             future: quiz,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
-                data = snapshot.data["results"]; // Assign data variable
+                data = snapshot.data!["results"];
 
                 if (isLoaded == false) {
                   optionsList = data[currentQuestionIndex]["incorrect_answers"];
@@ -112,25 +117,15 @@ class _QuizScreenState extends State<QuizScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              border: Border.all(
-                                color: lightGrey,
-                                width: 2,
+                          backButton(onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ResultScreen(
+                                    points: points, inpoints: inpoints),
                               ),
-                            ),
-                            child: IconButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              icon: const Icon(
-                                CupertinoIcons.xmark,
-                                color: Colors.white,
-                                size: 28,
-                              ),
-                            ),
-                          ),
+                            );
+                          }),
                           Stack(
                             alignment: Alignment.center,
                             children: [
@@ -194,40 +189,39 @@ class _QuizScreenState extends State<QuizScreen> {
 
                           return GestureDetector(
                             onTap: () {
-                              setState(() {
-                                if (answer == optionsList[index].toString()) {
-                                  optionsColor[index] = Colors.green;
-                                  points = points + 1;
-                                  print(points);
-                                } else {
-                                  optionsColor[index] = Colors.red;
-                                }
+                              setState(
+                                () {
+                                  if (answer == optionsList[index].toString()) {
+                                    optionsColor[index] = Colors.green;
+                                    points = points + 1;
+                                    print(points);
+                                  } else {
+                                    optionsColor[index] = Colors.red;
+                                    inpoints = inpoints + 1;
+                                  }
 
-                                // Move to the next question after a delay
-                                Future.delayed(
-                                  const Duration(seconds: 1),
-                                  () {
-                                    moveToNextQuestion();
-                                  },
-                                );
-                              });
+                                  Future.delayed(
+                                    const Duration(milliseconds: 50),
+                                    () {
+                                      moveToNextQuestion();
+                                    },
+                                  );
+                                },
+                              );
                             },
-                            child: SingleChildScrollView(
-                              child: Container(
-                                // height: 1000,
-                                margin: const EdgeInsets.only(bottom: 20),
-                                alignment: Alignment.center,
-                                width: size.width - 100,
-                                padding: const EdgeInsets.all(14),
-                                decoration: BoxDecoration(
-                                  color: optionsColor[index],
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: headingText(
-                                  optionsList[index].toString(),
-                                  blue,
-                                  18,
-                                ),
+                            child: Container(
+                              margin: const EdgeInsets.only(bottom: 20),
+                              alignment: Alignment.center,
+                              width: size.width - 100,
+                              padding: const EdgeInsets.all(14),
+                              decoration: BoxDecoration(
+                                color: optionsColor[index],
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: headingText(
+                                optionsList[index].toString(),
+                                blue,
+                                18,
                               ),
                             ),
                           );
@@ -239,8 +233,10 @@ class _QuizScreenState extends State<QuizScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    ResultScreen(points: points),
+                                builder: (context) => ResultScreen(
+                                  points: points,
+                                  inpoints: inpoints,
+                                ),
                               ),
                             );
                           },

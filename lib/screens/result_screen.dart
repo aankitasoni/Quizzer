@@ -6,13 +6,16 @@ import 'package:quiz_app3/screens/home_screen.dart';
 import 'package:quiz_app3/widgets/custom_button.dart';
 
 import '../constants/colors.dart';
+import '../widgets/back_button.dart';
 
 class ResultScreen extends StatefulWidget {
   final int points;
+  final int inpoints;
 
   const ResultScreen({
     super.key,
     required this.points,
+    required this.inpoints,
   });
 
   @override
@@ -27,13 +30,20 @@ class _ResultScreenState extends State<ResultScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-
-          // title: const Text("Results"),
-          // centerTitle: true,
-          // leading: const Icon(
-          //   CupertinoIcons.xmark,
-          // ),
-          leading: BackButton(),
+          backgroundColor: backgroundColor,
+          leading: Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: backButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const HomeScreen(),
+                  ),
+                );
+              },
+            ),
+          ),
         ),
         body: Container(
           width: double.infinity,
@@ -76,7 +86,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     ),
                   ),
                   Text(
-                    "Incorrect Answer: ${20 - widget.points}",
+                    "Incorrect Answer: ${widget.inpoints}",
                     style: const TextStyle(
                       color: Colors.red,
                       fontSize: 30,

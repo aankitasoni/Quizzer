@@ -4,6 +4,7 @@ import 'package:quiz_app3/constants/colors.dart';
 import 'package:quiz_app3/constants/images.dart';
 import 'package:quiz_app3/constants/text_style.dart';
 import 'package:quiz_app3/screens/quiz_screen.dart';
+import 'package:quiz_app3/widgets/back_button.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -21,23 +22,9 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  border: Border.all(
-                    color: lightGrey,
-                    width: 2,
-                  ),
-                ),
-                child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    CupertinoIcons.xmark,
-                    color: Colors.white,
-                    size: 28,
-                  ),
-                ),
-              ),
+              backButton(onPressed: (){
+                Navigator.pop(context);
+              }),
               Image.asset(
                 balloon2,
                 // width: 250,

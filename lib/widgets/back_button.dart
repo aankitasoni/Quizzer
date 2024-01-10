@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 
 import '../constants/colors.dart';
 
-class BackButton extends StatelessWidget {
-  const BackButton({super.key});
+class backButton extends StatelessWidget {
+  final Function() onPressed;
+
+  const backButton({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +19,7 @@ class BackButton extends StatelessWidget {
         ),
       ),
       child: IconButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
+        onPressed: onPressed,
         icon: const Icon(
           CupertinoIcons.xmark,
           color: Colors.white,
